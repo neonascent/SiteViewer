@@ -1,0 +1,1 @@
+The reverb zones don't work correctly for tour sound source and listener.  With Pro version, use Audio Reverb Filter connected to location of sound source.  (e.g. create and test for custom "reverb zone" boxes)
