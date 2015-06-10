@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.IO;
+using System.Net.Sockets;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
 
 public class downloadBundle : MonoBehaviour {
 
@@ -15,12 +19,21 @@ public class downloadBundle : MonoBehaviour {
 	private string bundleURL = null;
 	private string bundleFilePath = ""; 
 	private string AssetPath = ""; 
+
+	uint contentLength;
+	int n = 0;
+	int read = 0;
+	
+	
+	NetworkStream networkStream; 
+	FileStream fileStream;
+	Socket client;
 	
 	public string message = "started";
 
 
 	// Use this for initialization
-	IEnumerator Start () {
+	void Start () {
 		// start loading video
 		if (frames.Length > 0) {
 			loadingMovie = frames[0];
@@ -35,13 +48,14 @@ public class downloadBundle : MonoBehaviour {
 			if (!Directory.Exists(Application.persistentDataPath + "/" + guid)) {
 				Directory.CreateDirectory(Application.persistentDataPath + "/" + guid); 
 			}	
-			
-			yield return StartCoroutine(downloadBundleFile(bundleURL));
-			Debug.Log("Download done");
-			if (File.Exists(bundleFilePath)) {
-				// start loader and destroy this
-				Application.LoadLevel("Main");
-			}
+
+			Uri myUri = new Uri(bundleURL);   
+			string host = myUri.Host;
+			string uri = myUri.LocalPath;
+
+			// start downloading
+			startDownload(host, uri, bundleFilePath);
+		
 		} else {
 			message = "Bundle already downloaded and at " + bundleFilePath;
 			Debug.Log("Bundle already downloaded and at " + bundleFilePath);
@@ -72,6 +86,55 @@ public class downloadBundle : MonoBehaviour {
 		//yield return www;
 		
 	}
+
+	// Use this for initialization
+	void startDownload(string host, string uri, string targetLocation) {
+			string query = "GET " + uri.Replace(" ", "%20") + " HTTP/1.1\r\n" +
+				"Host: " + host + "\r\n" +
+					"User-Agent: undefined\r\n" +
+					"Connection: close\r\n"+
+					"\r\n";
+			
+			
+			Debug.Log (query);
+			
+			client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+			client.Connect(host, 80);   
+			
+			networkStream = new NetworkStream(client);
+			
+			var bytes = Encoding.Default.GetBytes(query);
+			networkStream.Write(bytes, 0, bytes.Length);
+			
+			var bReader = new BinaryReader(networkStream, Encoding.Default);
+			
+			string response = "";
+			string line;
+			char c;
+			
+			do 
+			{
+				line = "";
+				c = '\u0000';
+				while (true) 
+				{
+					c = bReader.ReadChar();
+					if (c == '\r')
+						break;
+					line += c;
+				}
+				c = bReader.ReadChar();
+				response += line + "\r\n";
+			} 
+			while (line.Length > 0);  
+			
+			Debug.Log ( response );
+			
+			Regex reContentLength = new Regex(@"(?<=Content-Length:\s)\d+", RegexOptions.IgnoreCase);
+			contentLength = uint.Parse(reContentLength.Match(response).Value);
+			
+			fileStream = new FileStream( targetLocation, FileMode.Create);
+		}
 
 
 	void OnGUI () {
@@ -111,5 +174,39 @@ public class downloadBundle : MonoBehaviour {
 	void Update () {
 		int index  = Mathf.FloorToInt((Time.time * framesPerSecond) % frames.Length);
 		loadingMovie = frames[index];
+
+		byte[] buffer = new byte[256 * 1024];
+		
+		if (n < contentLength) 
+		{
+			if (networkStream.DataAvailable) 
+			{
+				read = networkStream.Read(buffer, 0, buffer.Length);
+				n += read;
+				fileStream.Write(buffer, 0, read);
+			}
+			Debug.Log ( "Downloaded: " + n + " of " + contentLength + " bytes ..." );
+			message = "Downloading "+ guid + " - " + n + " of " + contentLength + " bytes";
+		}
+		else
+		{
+			fileStream.Flush();
+			fileStream.Close();
+			
+			client.Close();
+			Debug.Log("Download done");
+			if (File.Exists(bundleFilePath)) {
+				// start loader and destroy this
+				Application.LoadLevel("Main");
+			}
+		}
 	}
+
 }
+
+
+
+
+// Based on this:
+// http://stackoverflow.com/questions/4768443/downloading-file-via-tcpclient-from-http-server
+
