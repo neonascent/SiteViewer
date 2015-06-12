@@ -78,8 +78,9 @@ public class loadMessage : MonoBehaviour {
 	IEnumerator loadBundleObject() {
 
 
+		
 		Debug.Log ("loading");
-
+		AssetBundle bundle;
 		using(WWW www = new WWW(localURL))
 		{
 			yield return www;
@@ -89,14 +90,22 @@ public class loadMessage : MonoBehaviour {
 				message = www.error;
 				yield break;
 			}
-			Instantiate(www.assetBundle.LoadAsset(guid));
-			Debug.Log ("done");
-			yield return null;
-			
-			www.assetBundle.Unload(false);
-			this.enabled = false;
+			// Load and retrieve the AssetBundle
+			bundle = www.assetBundle;
 		}
-
+		// Load the object asynchronously
+		AssetBundleRequest request = bundle.LoadAssetAsync (guid);
+		
+		// Wait for completion
+		yield return request;
+		
+		
+		Instantiate(request.asset);
+		Debug.Log ("done");
+		yield return null;
+		
+		bundle.Unload(false);
+		this.enabled = false;
 
 
 
