@@ -500,7 +500,7 @@ Rollout rolMain "Export tools"
 			replaceParams &stream params;
 			writeConfigFile configFileName stream;
 			
-			local launchParam = appExe + " " + configFileName;
+			local launchParam = appExe + " \"" + configFileName + "\"";
 			hiddenDOSCommand launchParam startPath:appPath;
 			print ("Started with : " + launchparam);
 			renameFiles();
