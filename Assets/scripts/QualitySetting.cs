@@ -17,6 +17,7 @@ public class QualitySetting : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		s = QualitySlider.GetComponent<Slider> ();
+		s.value = 0;
 		t = text.GetComponent<Text> ();
 	}
 	
