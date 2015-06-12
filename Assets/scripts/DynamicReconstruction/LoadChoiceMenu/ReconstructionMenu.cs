@@ -180,7 +180,7 @@ public class ReconstructionMenu : MonoBehaviour {
 //			}
 			
 			// add reconstruction
-			textSize = GUI.skin.button.CalcSize(new GUIContent("Add R"));
+			textSize = GUI.skin.button.CalcSize(new GUIContent("Add  "));
 			x = x  - Mathf.FloorToInt(textSize.x) - spacer;
 			if (GUI.Button(new Rect(x, Screen.height - fontHeight - spacer, Mathf.FloorToInt(textSize.x), fontHeight), "Add")) {
 

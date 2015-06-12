@@ -81,7 +81,7 @@ public class loadMotionFromXML : EditorWindow {
 	private char[] charsToTrim = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 	
 	// Add menu item named "My Window" to the Window menu
-	[MenuItem("Tours/Import Tour Motion from XML")]
+	[MenuItem("TacticalSpace/Import/Tour Motion from XML", false, 10)]
 	public static void ShowWindow()
 	{
 		//Show existing window instance. If one doesn't exist, make one.

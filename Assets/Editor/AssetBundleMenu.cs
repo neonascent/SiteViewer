@@ -5,73 +5,73 @@ using System.IO;
 
 public class AssetBundleMenu
 {
-	[MenuItem("AssetBundles/Clear Cache")]
+	[MenuItem("TacticalSpace/AssetBundles/Clear Cache")]
 	static void ClearCache()
 	{
 		Caching.CleanCache ();
 	}
 	
-	[MenuItem("AssetBundles/Build for PC")]
+	[MenuItem("TacticalSpace/AssetBundles/Build for PC")]
 	static void TogglePCBuild ()
 	{
 		EditorPrefs.SetBool("buildPC", !EditorPrefs.GetBool("buildPC", false));
 	}
-	[MenuItem("AssetBundles/Build for PC", true)]
+	[MenuItem("TacticalSpace/AssetBundles/Build for PC", true)]
 	static bool TogglePCBuildValidate ()
 	{
-		Menu.SetChecked("AssetBundles/Build for PC", EditorPrefs.GetBool("buildPC", false));
+		Menu.SetChecked("TacticalSpace/AssetBundles/Build for PC", EditorPrefs.GetBool("buildPC", false));
 		return true;
 	}
 	
-	[MenuItem("AssetBundles/Build for OSX")]
+	[MenuItem("TacticalSpace/AssetBundles/Build for OSX")]
 	static void ToggleOSXBuild ()
 	{
 		EditorPrefs.SetBool("buildOSX", !EditorPrefs.GetBool("buildOSX", false));
 	}
-	[MenuItem("AssetBundles/Build for OSX", true)]
+	[MenuItem("TacticalSpace/AssetBundles/Build for OSX", true)]
 	static bool ToggleOSXBuildValidate ()
 	{
-		Menu.SetChecked("AssetBundles/Build for OSX", EditorPrefs.GetBool("buildOSX", false));
+		Menu.SetChecked("TacticalSpace/AssetBundles/Build for OSX", EditorPrefs.GetBool("buildOSX", false));
 		return true;
 	}
 	
-	[MenuItem("AssetBundles/Build for Web")]
+	[MenuItem("TacticalSpace/AssetBundles/Build for Web")]
 	static void ToggleWebBuild ()
 	{
 		EditorPrefs.SetBool("buildWeb", !EditorPrefs.GetBool("buildWeb", false));
 	}
-	[MenuItem("AssetBundles/Build for Web", true)]
+	[MenuItem("TacticalSpace/AssetBundles/Build for Web", true)]
 	static bool ToggleWebBuildValidate ()
 	{
-		Menu.SetChecked("AssetBundles/Build for Web", EditorPrefs.GetBool("buildWeb", false));
+		Menu.SetChecked("TacticalSpace/AssetBundles/Build for Web", EditorPrefs.GetBool("buildWeb", false));
 		return true;
 	}
 	
-	[MenuItem("AssetBundles/Build for iOS")]
+	[MenuItem("TacticalSpace/AssetBundles/Build for iOS")]
 	static void ToggleiOSBuild ()
 	{
 		EditorPrefs.SetBool("buildiOS", !EditorPrefs.GetBool("buildiOS", false));
 	}
-	[MenuItem("AssetBundles/Build for iOS", true)]
+	[MenuItem("TacticalSpace/AssetBundles/Build for iOS", true)]
 	static bool ToggleiOSBuildValidate ()
 	{
-		Menu.SetChecked("AssetBundles/Build for iOS", EditorPrefs.GetBool("buildiOS", false));
+		Menu.SetChecked("TacticalSpace/AssetBundles/Build for iOS", EditorPrefs.GetBool("buildiOS", false));
 		return true;
 	}
 	
-	[MenuItem("AssetBundles/Build for Android")]
+	[MenuItem("TacticalSpace/AssetBundles/Build for Android")]
 	static void ToggleAndroidBuild ()
 	{
 		EditorPrefs.SetBool("buildAndroid", !EditorPrefs.GetBool("buildAndroid", false));
 	}
-	[MenuItem("AssetBundles/Build for Android", true)]
+	[MenuItem("TacticalSpace/AssetBundles/Build for Android", true)]
 	static bool ToggleAndroidBuildValidate ()
 	{
-		Menu.SetChecked("AssetBundles/Build for Android", EditorPrefs.GetBool("buildAndroid", false));
+		Menu.SetChecked("TacticalSpace/AssetBundles/Build for Android", EditorPrefs.GetBool("buildAndroid", false));
 		return true;
 	}
 	
-	[MenuItem("AssetBundles/Build Asset Bundles")]
+	/*[MenuItem("TacticalSpace/AssetBundles/Build Asset Bundles")]
 	static void BuildAssetBundles() 
 	{
 		// Bring up save panel
@@ -101,5 +101,5 @@ public class AssetBundleMenu
 			Directory.CreateDirectory (path);
 		
 		BuildPipeline.BuildAssetBundles (path, BuildAssetBundleOptions.None, target);
-	}
+	}*/
 }

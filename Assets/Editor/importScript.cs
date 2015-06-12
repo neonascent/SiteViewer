@@ -12,7 +12,7 @@ public class importScript : EditorWindow
 	Shader selectedShader = null;
 	GameObject root = null;
 
-	float parallax = 0.05f;
+	float parallax = 0.005f;
 
 	// image files
 	string[] imageTypes = 		new string[] 	{	"Base",			"Normal", 		"Height"};
@@ -24,7 +24,7 @@ public class importScript : EditorWindow
 	private string[] compLabels = new string[] {"compressed", "16 bit", "Truecolour"};
 
 	// Add menu item named "My Window" to the Window menu
-	[MenuItem("Window/Set Object Properties")]
+	[MenuItem("TacticalSpace/Import/Set Object Properties", false, 10)]
 	public static void ShowWindow()
 	{
 		//Show existing window instance. If one doesn't exist, make one.
@@ -33,7 +33,7 @@ public class importScript : EditorWindow
 
 	void OnFocus() {
 		// initially set shader (although probably better elsewhere
-		if (selectedShader == null) selectedShader = Shader.Find ("Legacy Shaders/Parallax Diffuse");
+		if (selectedShader == null) selectedShader = Shader.Find ("Standard");
 	}
 
 	void OnGUI()
