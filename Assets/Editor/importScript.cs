@@ -73,7 +73,7 @@ public class importScript : EditorWindow
 
 		GUILayout.Label ("Tools", EditorStyles.boldLabel);
 
-		EditorGUI.BeginDisabledGroup ((root == null) || (root.transform.childCount < 2));
+		EditorGUI.BeginDisabledGroup ((root == null) || (root.transform.childCount < 1));
 
 		if( GUILayout.Button("Set Materials")) {
 			setMaterials(root);
