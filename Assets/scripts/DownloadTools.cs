@@ -180,7 +180,13 @@ namespace Tools {
 					Debug.Log ("Download done");
 					if (File.Exists (targetLocation+"_temp")) {
 						// start loader and destroy this
-						File.Move(targetLocation+"_temp", targetLocation);
+						#if !UNITY_WEBPLAYER
+							File.Move(targetLocation+"_temp", targetLocation);
+						#endif
+						#if UNITY_WEBPLAYER
+						File.Copy(targetLocation+"_temp", targetLocation);
+						File.Delete(targetLocation+"_temp");
+						#endif
 						return true;
 					}
 				}

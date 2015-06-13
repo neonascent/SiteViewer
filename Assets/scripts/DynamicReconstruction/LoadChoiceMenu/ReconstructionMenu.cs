@@ -131,13 +131,14 @@ public class ReconstructionMenu : MonoBehaviour {
 					
 				} else {
 					// delete
+					#if !UNITY_WEBPLAYER
 					textSize = GUI.skin.button.CalcSize(new GUIContent("Delete"));
 					x = x  - Mathf.FloorToInt(textSize.x);
 					if (GUI.Button(new Rect(x, line,Mathf.FloorToInt(textSize.x), fontHeight), "Delete")) {
 						deleteRecon(recons[i]);
 						recons = listReconstructions();
 					}
-					
+					#endif
 //					// rename
 //					textSize = GUI.skin.button.CalcSize(new GUIContent("Rename"));
 //					x = x  - Mathf.FloorToInt(textSize.x) - spacer;
@@ -219,12 +220,16 @@ public class ReconstructionMenu : MonoBehaviour {
 	}
 				
 	void deleteRecon (string recon) {
+		#if !UNITY_WEBPLAYER
 		Directory.Delete(Application.persistentDataPath + "/" + recon, true);
+		#endif
 	}
 	
 	void renameRecon (string recon, string newName) {
+		#if !UNITY_WEBPLAYER
 		if (recon != newName) {
 			Directory.Move(Application.persistentDataPath + "/" + recon, Application.persistentDataPath + "/" + newName);
 		}
+		#endif
 	}
 }

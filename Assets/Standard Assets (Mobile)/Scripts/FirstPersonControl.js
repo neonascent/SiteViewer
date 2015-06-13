@@ -30,7 +30,7 @@ var rotationSpeed : Vector2 = Vector2( 50, 25 );	// Camera rotation speed for ea
 var tiltPositiveYAxis = 0.6;
 var tiltNegativeYAxis = 0.4;
 var tiltXAxisMinimum = 0.1;
-var tiltControl = false; 
+var tiltControl = false;
 
 private var thisTransform : Transform;
 private var character : CharacterController;
