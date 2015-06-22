@@ -22,7 +22,7 @@ public class PlatformBehaviour : MonoBehaviour {
 
 
 		// turn off mouse look for ipad
-		if (Application.platform == RuntimePlatform.IPhonePlayer) {
+		if ((Application.platform == RuntimePlatform.IPhonePlayer) || (Application.platform == RuntimePlatform.Android)) {
 			// set things
 			mouseLookX.enabled = false;
 			mouseLookY.enabled = false;
